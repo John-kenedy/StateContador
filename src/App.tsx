@@ -1,22 +1,78 @@
 import { useState } from "react";
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  const [user, setUser] = useState({
+    name: "John Doe",
+    age: 99,
+    cpf: "xxx.xxx.xxx-xx",
+  });
 
-  let mensagem = null;
-  if (count === 19) {
-    mensagem = <p>Você conseguiu!</p>;
+  const [tempName, setTempName] = useState("");
+  const [tempAge, setTempAge] = useState(0);
+  const [tempCpf, setTempCpf] = useState("");
+
+  function updateName() {
+    setUser({ ...user, name: tempName });
+    setTempName("");
+  }
+
+  function updateAge() {
+    setUser({ ...user, age: tempAge });
+    setTempAge(0);
+  }
+
+  function updateCpf() {
+    setUser({ ...user, cpf: tempCpf });
+    setTempCpf("");
+  }
+
+  function aumentarIdade() {
+    setUser({ ...user, age: user.age + 1 });
   }
 
   return (
-    <div>
-      <h1>Valor atual: {count}</h1>
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h2>Informações do Usuário</h2>
+      <p><strong>Nome:</strong> {user.name}</p>
+      <p><strong>Idade:</strong> {user.age}</p>
+      <p><strong>CPF:</strong> {user.cpf}</p>
 
-      <button onClick={() => setCount(count + 3)}>Somar 3</button>
-      <button onClick={() => setCount(count - 2)}>Diminuir 2</button>
+      <button onClick={aumentarIdade}>Aumentar idade +1</button>
 
-      {/* Mostra a mensagem se count for 19 */}
-      {mensagem}
+      <hr />
+
+      {/* Nome */}
+      <div>
+        <input
+          type="text"
+          placeholder="Novo nome"
+          value={tempName}
+          onChange={(e) => setTempName(e.target.value)}
+        />
+        <button onClick={updateName}>Alterar Nome</button>
+      </div>
+
+      {/* Idade */}
+      <div>
+        <input
+          type="number"
+          placeholder="Nova idade"
+          value={tempAge}
+          onChange={(e) => setTempAge(Number(e.target.value))}
+        />
+        <button onClick={updateAge}>Alterar Idade</button>
+      </div>
+
+      {/* CPF */}
+      <div>
+        <input
+          type="text"
+          placeholder="Novo CPF"
+          value={tempCpf}
+          onChange={(e) => setTempCpf(e.target.value)}
+        />
+        <button onClick={updateCpf}>Alterar CPF</button>
+      </div>
     </div>
   );
 }
